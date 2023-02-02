@@ -1,3 +1,12 @@
+
+set(MY_TEST_LIB "")
+file(GLOB_RECURSE all_imp_srcs CONFIGURE_DEPENDS *.cpp)
+list(FILTER all_imp_srcs EXCLUDE REGEX "test_*.cpp$")
+if(all_imp_srcs)
+set(MY_TEST_LIB my_test_lib)
+add_library(${MY_TEST_LIB} SHARED ${all_imp_srcs} )
+endif()
+
 # for each "test/test_x.cpp", generate target "test_x"
 file(GLOB_RECURSE all_tests test_*.cpp)
 foreach(v ${all_tests})
@@ -9,10 +18,9 @@ foreach(v ${all_tests})
     add_executable(${target_name} ${v})
 endforeach()
 
-
 # manual target (not start with "atest_")
 find_package(GTest)
 find_package(glog)
 
 add_executable(g_test g_test.cpp)
-target_link_libraries(g_test GTest::GTest glog::glog ${MY_LIB})
+target_link_libraries(g_test GTest::GTest glog::glog ${MY_LIB} ${MY_TEST_LIB})
