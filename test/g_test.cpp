@@ -9,14 +9,14 @@
 
 namespace {
 void setup_glog() {
-  const std::string logdir = "./logs/";
-  if (!std::filesystem::is_directory(logdir) ||
-      !std::filesystem::exists(logdir)) {
-    std::filesystem::create_directory(logdir);
-    std::cout << "create_log_directory: " << logdir << std::endl;
+  const std::string log_dir = "./logs/";
+  if (!std::filesystem::is_directory(log_dir) ||
+      !std::filesystem::exists(log_dir)) {
+    std::filesystem::create_directory(log_dir);
+    std::cout << "create_log_directory: " << log_dir << std::endl;
   }
-  google::InitGoogleLogging("testlog");
-  google::SetLogDestination(google::GLOG_INFO, logdir.c_str());
+  google::InitGoogleLogging("test_log");
+  google::SetLogDestination(google::GLOG_INFO, log_dir.c_str());
 }
 int test_glog() {
   // Initialize Google’s logging library.
@@ -34,7 +34,7 @@ int test_glog() {
   DLOG(INFO) << "DLOG(INFO)";
   return 0;
 }
-TEST(GLOG, logtest) {
+TEST(GLOG, Test) {
   EXPECT_EQ(test_glog(), 0); // PASS
   EXPECT_EQ(test_glog(), 1) << "FAILED: EXPECT: 0, but given 1";
 }
