@@ -1,4 +1,7 @@
 
+find_package(BehaviorTreeV3 CONFIG REQUIRED)
+find_package(Boost REQUIRED COMPONENTS  context )
+
 file(GLOB_RECURSE all_imp_srcs CONFIGURE_DEPENDS *.cpp)
 list(FILTER all_imp_srcs EXCLUDE REGEX "app_.*.cpp$")
 add_library(${MY_LIB} SHARED ${all_imp_srcs} )
@@ -12,5 +15,6 @@ foreach(v ${all_app_srcs})
     string(REGEX REPLACE ".cpp" "" target_name ${target_name})
 
     add_executable(${target_name} ${v})
-    TARGET_LINK_LIBRARIES(${target_name}  ${MY_LIB})
+    TARGET_LINK_LIBRARIES(${target_name} BT::behaviortree_cpp_v3  Boost::context ${MY_LIB})
+
 endforeach()

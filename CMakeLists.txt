@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.20.0)
-# conan install . --output-folder=build --build=missing -s build_type=Release
-# conan install . --output-folder=build --build=missing -s build_type=Debug
-set(CMAKE_TOOLCHAIN_FILE ${CMAKE_BINARY_DIR}/conan_toolchain.cmake)
+
+if(NOT DEFINED CMAKE_TOOLCHAIN_FILE)
+    set(CMAKE_TOOLCHAIN_FILE
+        "$ENV{HOME}/vcpkg/scripts/buildsystems/vcpkg.cmake"
+        CACHE STRING "Vcpkg toolchain file")
+endif()
+
 
 set(CMAKE_CXX_STANDARD 17)
 # set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -13,6 +17,8 @@ if (NOT CMAKE_BUILD_TYPE)
 endif()
 
 project(my_project_name VERSION 0.0.1 LANGUAGES C CXX)
+
+find_package(BehaviorTreeV3 CONFIG REQUIRED)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 set(MY_LIB mylib)

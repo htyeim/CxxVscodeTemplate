@@ -19,8 +19,7 @@ foreach(v ${all_tests})
 endforeach()
 
 # manual target (not start with "atest_")
-find_package(GTest)
-find_package(glog)
+find_package(GTest CONFIG REQUIRED)
 
 add_executable(g_test g_test.cpp)
-target_link_libraries(g_test GTest::GTest glog::glog ${MY_LIB} ${MY_TEST_LIB})
+target_link_libraries(g_test GTest::gtest ${MY_LIB} ${MY_TEST_LIB})
